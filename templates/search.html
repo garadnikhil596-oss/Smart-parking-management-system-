@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Search Records{% endblock %}
+
+{% block content %}
+
+<style>
+
+.main-container{
+width:95%;
+margin:30px auto;
+background:white;
+padding:30px;
+border-radius:8px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Header */
+
+.top-search{
+font-size:20px;
+margin-bottom:25px;
+color:#444;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+/* Search Box */
+
+.search-box{
+max-width:500px;
+margin:auto;
+margin-bottom:30px;
+}
+
+.search-box form{
+display:flex;
+}
+
+.search-box input{
+flex:1;
+padding:12px;
+border:1px solid #ccc;
+border-right:none;
+border-radius:5px 0 0 5px;
+outline:none;
+font-size:14px;
+}
+
+.search-box button{
+width:60px;
+border:none;
+background:#6c757d;
+color:white;
+border-radius:0 5px 5px 0;
+cursor:pointer;
+}
+
+.search-box button:hover{
+background:#555;
+}
+
+/* Table */
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th{
+background:#f4f6f9;
+padding:12px;
+text-align:center;
+font-weight:600;
+}
+
+td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+tr:hover{
+background:#fafafa;
+}
+
+/* Status */
+
+.status{
+padding:4px 12px;
+border-radius:20px;
+color:white;
+font-size:12px;
+}
+
+.Parked{
+background:#28a745;
+}
+
+.Departed{
+background:#dc3545;
+}
+
+/* No Result */
+
+.result-message{
+text-align:center;
+margin-top:30px;
+font-size:18px;
+color:#dc3545;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+table{
+font-size:12px;
+}
+
+.search-box{
+max-width:100%;
+}
+
+}
+
+</style>
+
+<div class="main-container">
+
+<!-- Header -->
+
+<div class="top-search">
+<i class="fa fa-search"></i>
+<span>Search Vehicle Records</span>
+</div>
+
+<!-- Search Form -->
+
+<div class="search-box">
+
+<form method="POST" action="{{ url_for('records') }}">
+
+<input 
+type="text"
+name="search"
+value="{{ search }}"
+placeholder="Search by Vehicle Number or Receipt Serial Number"
+required>
+
+<button type="submit">
+<i class="fa fa-search"></i>
+</button>
+
+</form>
+
+</div>
+
+<!-- Result Table -->
+
+{% if vehicles %}
+
+<table>
+
+<tr>
+<th>#</th>
+<th>Vehicle Number</th>
+<th>Type</th>
+<th>Parking Area</th>
+<th>Charge</th>
+<th>Arrival Time</th>
+<th>Status</th>
+</tr>
+
+{% for vehicle in vehicles %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>{{ vehicle.vehicle_no }}</td>
+
+<td>{{ vehicle.vehicle_type }}</td>
+
+<td>{{ vehicle.parking_area_no }}</td>
+
+<td>₹ {{ vehicle.charge }}</td>
+
+<td>{{ vehicle.arrival_time }}</td>
+
+<td>
+<span class="status {{ vehicle.status }}">
+{{ vehicle.status }}
+</span>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% elif search %}
+
+<div class="result-message">
+No records found
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

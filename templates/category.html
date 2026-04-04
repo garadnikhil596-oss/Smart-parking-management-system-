@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Category{% endblock %}
+{% block content %}
+
+<div class="row">
+
+    <!-- LEFT SIDE -->
+    <div class="left-section">
+
+        <!-- ADD CATEGORY -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-th-large"></i> Add Category
+            </div>
+
+            <form action="{{ url_for('add_category') }}" method="POST">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Parking Area Number</label>
+                        <input type="text" name="area_number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vehicle Type</label>
+                        <input type="text" name="vehicle_type" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Vehicle Limit</label>
+                    <input type="number" name="vehicle_limit" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Parking Charge</label>
+                    <input type="number" name="parking_charge" required>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" required>
+                        <option value="1">Activated</option>
+                        <option value="0">Deactivated</option>
+                    </select>
+                </div> -->
+
+                <button type="submit" class="btn-submit">Submit</button>
+
+            </form>
+        </div>
+
+        <!-- MANAGE CATEGORY -->
+        <div class="card mt-20">
+            <div class="card-header">
+                <i class="fa fa-list"></i> Manage Category
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Area Number</th>
+                        <th>Vehicle Type</th>
+                        <th>Vehicle Limit</th>
+                        <th>Charge</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for cat in categories %}
+                    <tr>
+                        <td>{{ cat.cat_id }}</td>
+                        <td>{{ cat.parking_area_no }}</td>
+                        <td>{{ cat.vehicle_type }}</td>
+                        <td>{{ cat.vehicle_limit }}</td>
+                        <td>₹ {{ cat.parking_charge }}</td>
+
+                        <td>
+                            {% if cat.status == 1 %}
+                                <span class="status-active">Activated</span>
+                            {% else %}
+                                <span class="status-inactive">Deactivated</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <!-- Toggle Status -->
+                            <a href="{{ url_for('toggle_status', id=cat.cat_id) }}" class="btn-red">
+                                {% if cat.status == 1 %}
+                                    Deactivate
+                                {% else %}
+                                    Activate
+                                {% endif %}
+                            </a>
+
+                            <!-- Delete -->
+                            <a href="{{ url_for('delete_category', id=cat.cat_id) }}" class="btn-red small">
+                                <i class="fa fa-trash"></i>
+                            </a>
+
+                            <!-- Edit -->
+                            <a href="{{ url_for('edit_category', id=cat.cat_id) }}" class="btn-blue small">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

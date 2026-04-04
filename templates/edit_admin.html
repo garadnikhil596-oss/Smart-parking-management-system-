@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Admin{% endblock %}
+
+{% block content %}
+
+<style>
+
+.form-box{
+width:400px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:8px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+</style>
+
+<div class="form-box">
+
+<h3>Edit Admin</h3>
+
+<form method="POST">
+
+<input type="text" name="name" value="{{ admin[1] }}" required>
+
+<input type="text" name="username" value="{{ admin[2] }}" required>
+
+<input type="text" name="password" value="{{ admin[3] }}" required>
+
+<button type="submit">Update Admin</button>
+
+</form>
+
+</div>
+
+{% endblock %}

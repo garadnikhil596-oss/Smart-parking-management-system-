@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Vehicle Report{% endblock %}
+
+{% block content %}
+
+<div class="card" style="padding:20px; margin:20px;">
+    <h2>Vehicle Entry Report (Last 7 Days)</h2>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function () {
+
+    var dataPoints = {{ data_points | tojson }};
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        axisX: {
+            valueFormatString: "DD MMM"
+        },
+        axisY: {
+            title: "Number of Entries"
+        },
+        data: [{
+            type: "splineArea",
+            xValueType: "dateTime",
+            dataPoints: dataPoints
+        }]
+    });
+
+    chart.render();
+}
+</script>
+
+{% endblock %}

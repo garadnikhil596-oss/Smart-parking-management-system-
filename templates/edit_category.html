@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Edit Category{% endblock %}
+
+{% block content %}
+<h2>Edit Category</h2>
+
+<form method="POST" action="{{ url_for('update_category', id=category.cat_id) }}">
+    <div class="form-group">
+        <label>Parking Area Number</label>
+        <input type="text" name="area_number" value="{{ category.parking_area_no }}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Vehicle Type</label>
+        <input type="text" name="vehicle_type" value="{{ category.vehicle_type }}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Vehicle Limit</label>
+        <input type="number" name="vehicle_limit" value="{{ category.vehicle_limit }}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Parking Charge</label>
+        <input type="number" name="parking_charge" value="{{ category.parking_charge }}" required>
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <select name="status" required>
+            <option value="1" {% if category.status==1 %}selected{% endif %}>Activated</option>
+            <option value="0" {% if category.status==0 %}selected{% endif %}>Deactivated</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn-submit">Update</button>
+</form>
+{% endblock %}
