@@ -12,7 +12,11 @@ def get_db_connection():
         host="localhost",
         database="nikhil",
         user="postgres",
+<<<<<<< HEAD
         password="1993",
+=======
+        password="199310",
+>>>>>>> d176ce0ba85f2f26516ac87a49a99e4689a84ad7
         port="5432"
     )
 
@@ -21,11 +25,19 @@ def get_db_connection():
 # ==============================
 @app.route('/')
 def home():
+<<<<<<< HEAD
     return render_template("index.html")
 
 
 # LOGIN
 @app.route('/index', methods=['POST'])
+=======
+    return render_template("login.html")
+
+
+# LOGIN
+@app.route('/login', methods=['POST'])
+>>>>>>> d176ce0ba85f2f26516ac87a49a99e4689a84ad7
 def login():
 
     username = request.form['username']
@@ -441,7 +453,11 @@ def admin_list():
         host="localhost",
         database="nikhil",
         user="postgres",
+<<<<<<< HEAD
         password="1993"
+=======
+        password="199310"
+>>>>>>> d176ce0ba85f2f26516ac87a49a99e4689a84ad7
     )
 
     cur = conn.cursor()
@@ -464,7 +480,11 @@ def delete_admin(id):
         host="localhost",
         database="nikhil",
         user="postgres",
+<<<<<<< HEAD
         password="1993"
+=======
+        password="199310"
+>>>>>>> d176ce0ba85f2f26516ac87a49a99e4689a84ad7
     )
 
     cur = conn.cursor()
@@ -486,7 +506,11 @@ def edit_admin(id):
         host="localhost",
         database="nikhil",
         user="postgres",
+<<<<<<< HEAD
         password="1993"
+=======
+        password="199310"
+>>>>>>> d176ce0ba85f2f26516ac87a49a99e4689a84ad7
     )
 
     cur = conn.cursor()
