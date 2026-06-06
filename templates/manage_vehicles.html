@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Vehicles{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* Container */
+.container {
+    width: 100%;
+}
+
+/* Card */
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.header small {
+    color: #888;
+    font-size: 13px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8f9fa;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.parked {
+    background-color: #28a745;
+}
+
+.btn {
+    padding: 6px 12px;
+    background: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn:hover {
+    background: #5a6268;
+}
+
+</style>
+
+<div class="card">
+
+    <div class="header">
+        <div>
+            <h2>☰ Manage Vehicle</h2>
+            <small>Only last 30 days records</small>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Vehicle Number</th>
+                <th>Type</th>
+                <th>Area No.</th>
+                <th>Arrival Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+{% if vehicles %}
+    {% for vehicle in vehicles %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ vehicle.vehicle_no }}</td>
+        <td>{{ vehicle.vehicle_type }}</td>
+        <td>{{ vehicle.parking_area_no }}</td>
+        <td>{{ vehicle.arrival_time }}</td>
+
+        <!-- Status Column -->
+        <td>
+            <span class="status {{ 'parked' if vehicle.status == 'Parked' else 'departed' }}">
+                {{ vehicle.status }}
+            </span>
+        </td>
+
+        <!-- Action Column -->
+        <td>
+            {% if vehicle.status == "Parked" %}
+                <form method="POST" action="{{ url_for('update_status') }}" style="display:inline;">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                    <button type="submit" class="btn">Done</button>
+                </form>
+            {% else %}
+                <span style="color:gray;">Completed</span>
+            {% endif %}
+        </td>
+
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="7" style="text-align:center;">
+            No Vehicles Found
+        </td>
+    </tr>
+{% endif %}
+
+</tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

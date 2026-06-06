@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parking Receipt</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+/* Card */
+.receipt-card{
+    background:#ffffff;
+    width:100%;
+    max-width:450px;
+    border-radius:15px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+    overflow:hidden;
+    animation:fadeIn 0.4s ease-in-out;
+}
+
+/* Header */
+.receipt-header{
+    background:#2a5298;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.receipt-header h2{
+    font-size:22px;
+    letter-spacing:1px;
+}
+
+/* Body */
+.receipt-body{
+    padding:25px;
+}
+
+.receipt-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    padding-bottom:8px;
+    border-bottom:1px dashed #ddd;
+}
+
+.receipt-row span:first-child{
+    font-weight:600;
+    color:#555;
+}
+
+.receipt-row span:last-child{
+    color:#222;
+}
+
+/* Status Badge */
+.status{
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    background:#28a745;
+    color:white;
+}
+
+/* Footer */
+.receipt-footer{
+    text-align:center;
+    padding:20px;
+}
+
+.print-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:#28a745;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.print-btn:hover{
+    background:#218838;
+    transform:scale(1.05);
+}
+
+/* Animation */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* Print Styling */
+@media print {
+    body{
+        background:white;
+    }
+    .print-btn{
+        display:none;
+    }
+    .receipt-card{
+        box-shadow:none;
+        border:1px solid #000;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="receipt-card">
+
+    <div class="receipt-header">
+        <h2>🧾 Parking Receipt</h2>
+        <small>Smart Parking Management System</small>
+    </div>
+
+    <div class="receipt-body">
+
+        <div class="receipt-row">
+            <span>Vehicle Number</span>
+            <span>{{ vehicle.vehicle_no }}</span>
+        </div>
+
+        <div class="receipt-row">
+            <span>Vehicle Type</span>
+            <span>{{ vehicle.vehicle_type }}</span>
+        </div>
+
+        <div class="receipt-row">
+            <span>Parking Area</span>
+            <span>{{ vehicle.parking_area_no }}</span>
+        </div>
+
+        <!-- New Row Added -->
+       <div class="receipt-row">
+           <span>Parking Charge</span>
+           <span>₹ {{ vehicle.charge }}</span>
+        </div>
+
+        <div class="receipt-row">
+            <span>Arrival Time</span>
+            <span>{{ vehicle.arrival_time }}</span>
+        </div>
+
+        <div class="receipt-row">
+            <span>Status</span>
+            <span class="status">{{ vehicle.status }}</span>
+        </div>
+
+    </div>
+
+    <div class="receipt-footer">
+        <button class="print-btn" onclick="window.print()">🖨 Print Receipt</button>
+    </div>
+
+</div>
+
+</body>
+</html>
